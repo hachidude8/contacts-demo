@@ -1,0 +1,42 @@
+<form *ngIf="form" [formGroup]="form">
+
+  <h1>Add/Edit contact</h1>
+
+  <mat-form-field class="w-100" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field class="w-100 mt-3" appearance="fill">
+    <mat-label>Nickname</mat-label>
+    <input matInput formControlName="nickname">
+  </mat-form-field>
+
+  <mat-form-field class="w-100 mt-3" appearance="fill">
+    <mat-label>Role</mat-label>
+    <textarea matInput formControlName="role"></textarea>
+  </mat-form-field>
+
+  <contd-error-message
+    *ngIf="state === States.ERROR"
+    [error]="error"
+    class="my-4"
+    genericMessage="There was an error while saving the data"
+  ></contd-error-message>
+
+  <div class="mt-4">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="save()">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+    <button mat-raised-button class="ml-2" (click)="closeDialog()">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </div>
+
+</form>

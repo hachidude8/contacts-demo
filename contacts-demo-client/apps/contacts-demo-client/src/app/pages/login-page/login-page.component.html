@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row flex-column justify-content-center align-items-center">
+    <div class="col col-md-8 col-xl-4">
+      <h1>Login</h1>
+      <mat-card>
+        <mat-card-content>
+          <div
+            *ngIf="state === States.LOADING"
+            class="my-3 d-flex justify-content-center"
+          >
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <form
+            *ngIf="form"
+            [class.d-none]="state === States.LOADING"
+            [formGroup]="form"
+            (ngSubmit)="login()"
+          >
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="username" autocomplete>
+            </mat-form-field>
+            <br>
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" autocomplete="current-password">
+            </mat-form-field>
+            <br>
+
+            <contd-error-message
+              *ngIf="state === States.ERROR"
+              class="my-2"
+              [error]="error"
+              genericMessage="Ha ocurrido un error durante el proceso de login"
+            ></contd-error-message>
+
+            <button
+              mat-raised-button
+              [disabled]="form.invalid"
+              color="primary"
+              type="submit"
+            >Login
+            </button>
+          </form>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

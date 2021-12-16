@@ -1,0 +1,31 @@
+<div
+  *ngIf="page"
+  class="d-flex align-items-center justify-content-center"
+>
+  <button mat-button [disabled]="isFirst" (click)="first()">
+    <mat-icon>first_page</mat-icon>
+  </button>
+  <button mat-button [disabled]="!hasPrevious" (click)="previous()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <ng-container *ngFor="let index of pageIndexes">
+    <button
+      *ngIf="index !== page.number"
+      mat-button
+      (click)="open(index)"
+    >{{ index + 1 }}</button>
+
+    <button
+      *ngIf="index === page.number"
+      mat-raised-button
+    >{{ index + 1 }}</button>
+  </ng-container>
+
+  <button mat-button [disabled]="!hasNext" (click)="next()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+  <button mat-button [disabled]="isLast" (click)="last()">
+    <mat-icon>last_page</mat-icon>
+  </button>
+</div>

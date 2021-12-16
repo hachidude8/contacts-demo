@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: app
+    hostname: app
+    ports:
+      - "80:80"
+    networks:
+      - conct-network
+
+networks:
+  conct-network:
+    driver: bridge

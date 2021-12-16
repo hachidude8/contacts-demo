@@ -1,0 +1,104 @@
+<contd-page-header
+  heading="My contacts"
+></contd-page-header>
+
+<div class="container py-5">
+  <div class="row">
+    <div
+      *ngIf="state === States.LOADING"
+      class="col-12"
+    >
+      <div class="d-flex justify-content-center">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+
+    <mat-card
+      *ngIf="state === States.ERROR"
+      class="col-12">
+      <mat-card-content
+      >
+        <p>There was an error while loading the data</p>
+      </mat-card-content>
+    </mat-card>
+
+    <div
+      class="col-12"
+      [class.d-none]="state !== States.IDLE"
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="w-100 mat-elevation-z8"
+        matSort
+        (matSortChange)="sortColumn($event)"
+      >
+        <ng-container matColumnDef="name">
+          <th class="w-auto"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header="name">Name
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nickname">
+          <th
+            class="w-25"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="nickname">Nickname
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.nickname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th
+            class="w-25"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="role">Role
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th class="w-10" mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <div class="d-flex justify-content-center">
+              <button mat-button (click)="edit(element, i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-button color="warn" (click)="remove(element, i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div class="row mt-3">
+        <div class="col">
+          <button mat-raised-button color="primary" (click)="edit()">
+            <mat-icon>add</mat-icon>
+            New contact
+          </button>
+
+          <button mat-raised-button class="ms-1" (click)="loadData()">
+            <mat-icon>refresh</mat-icon>
+            Reload
+          </button>
+        </div>
+        <contd-paginator
+          class="col col-xl-6"
+          [page]="page"
+          (pageEvent)="pageList($event)"
+        ></contd-paginator>
+        <div class="col">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+</div>
